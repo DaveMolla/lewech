@@ -42,4 +42,14 @@ class ItemController extends Controller
 
         return redirect()->back()->with('success', 'Item created successfully.');
     }
+    public function myItems()
+    {
+        if (Auth::check()) {
+            $items = Auth::user()->items;
+            // dd($items);
+        } else {
+            $items = collect();
+        }
+        return view('dashboard', ['items' => $items]);
+    }
 }
