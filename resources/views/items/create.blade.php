@@ -1,6 +1,6 @@
 <!-- resources/views/items/create.blade.php -->
 <x-app-layout>
-    <x-slot name="header">
+    {{-- <x-slot name="header">
         <div class="flex space-x-4">
             <a href="{{ route('items.create') }}" class="px-4 py-2 bg-blue-500 text-black rounded hover:bg-blue-700 transition">
                 Post Item
@@ -14,7 +14,7 @@
                 Notifications
             </a>
         </div>
-    </x-slot>
+    </x-slot> --}}
     {{-- <x-slot name="header">
         Create Item
     </x-slot> --}}

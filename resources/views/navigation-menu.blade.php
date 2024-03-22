@@ -12,9 +12,24 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    <div class="flex space-x-4 items-center">
+                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <a href="{{ route('items.create') }}" class="px-4 py-2 bg-blue-500 text-black rounded hover:bg-blue-700 transition">
+                            Post Item
+                        </a>
+
+                        <a href="{{ route('requests.index') }}" class="px-4 py-2 bg-green-500 text-black rounded hover:bg-green-700 transition">
+                            My Requests
+                        </a>
+
+                        <a href="{{ route('notifications.index') }}" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition">
+                            Notifications
+                        </a>
+                    </div>
+
                     <!-- You can add more links here for navigation -->
                 </div>
             </div>
