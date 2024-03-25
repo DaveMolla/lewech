@@ -42,6 +42,12 @@ class ItemController extends Controller
 
         return redirect()->back()->with('success', 'Item created successfully.');
     }
+    public function show(Item $item)
+    {
+        $item->load('itemRequests.sender', 'media');
+        return view('items.show', compact('item'));
+    }
+
     public function myItems()
     {
         if (Auth::check()) {
@@ -52,4 +58,43 @@ class ItemController extends Controller
         }
         return view('dashboard', ['items' => $items]);
     }
+    public function myItemRequests()
+    {
+        $user = Auth::user();
+        $itemRequests = $user->items()
+            ->with([
+                'itemRequests' => function ($query) {
+                    $query->latest();
+                }
+            ])
+            ->get()
+            ->pluck('itemRequests')
+            ->collapse()
+            ->sortByDesc('created_at');
+
+        return view('requests.my-item-requests', compact('itemRequests'));
+    }
+
+    public function myRequests()
+    {
+        $user = Auth::user();
+        $requests = $user->itemRequests()
+            ->latest()
+            ->get();
+
+        return view('requests.index', compact('requests'));
+    }
+
+    public function closeStatus(Item $item)
+    {
+        $item->update(['status' => 'closed']);
+        return back()->with('success', 'Status updated successfully.');
+    }
+
+    public function reopenStatus(Item $item)
+    {
+        $item->update(['status' => 'open']);
+        return back()->with('success', 'Status updated successfully.');
+    }
+
 }

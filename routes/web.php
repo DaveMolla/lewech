@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -39,14 +39,19 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/items/create', [ItemController::class, 'create'])->name('items.create');
     Route::get('/notifications', [UserNotificationController::class, 'index'])->name('notifications.index');
     Route::get('/dashboard', [ItemController::class, 'myItems'])->name('dashboard');
-
+    Route::get('/my-item-requests', [ItemController::class, 'myItemRequests'])->name('requests.my-item-requests');
+    Route::post('/item-requests/{itemRequest}/accept', [ItemRequestController::class, 'accept'])->name('item-requests.accept');
+    Route::post('/item-requests/{itemRequest}/reject', [ItemRequestController::class, 'reject'])->name('item-requests.reject');
+    Route::post('/item-status/{item}/close', [ItemController::class, 'closeStatus'])->name('item-status.close');
+    Route::post('/item-status/{item}/reopen', [ItemController::class, 'reopenStatus'])->name('item-status.reopen');
+    Route::get('/items/{item}/request', [ItemRequestController::class, 'create'])->name('requests.create');
+    Route::post('/requests', [ItemRequestController::class, 'store'])->name('requests.store');
 });
 
-Route::get('/items/{item}/request', [ItemRequestController::class, 'create'])->name('requests.create')->middleware('auth');
 
-Route::post('/requests', [ItemRequestController::class, 'store'])->name('requests.store')->middleware('auth');
+Route::get('/', [ItemController::class, 'feed'])->name('feed');
+Route::get('/items/{item}', [ItemController::class, 'show'])->name('items.show');
 
-Route::get('/feed', [ItemController::class, 'feed'])->name('feed');
 
 
 

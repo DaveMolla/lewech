@@ -1,26 +1,11 @@
-<!-- resources/views/items/create.blade.php -->
 <x-app-layout>
-    {{-- <x-slot name="header">
-        <div class="flex space-x-4">
-            <a href="{{ route('items.create') }}" class="px-4 py-2 bg-blue-500 text-black rounded hover:bg-blue-700 transition">
-                Post Item
-            </a>
-
-            <a href="{{ route('requests.index') }}" class="px-4 py-2 bg-green-500 text-black rounded hover:bg-green-700 transition">
-                My Requests
-            </a>
-
-            <a href="{{ route('notifications.index') }}" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition">
-                Notifications
-            </a>
-        </div>
-    </x-slot> --}}
-    {{-- <x-slot name="header">
-        Create Item
-    </x-slot> --}}
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Create Item') }}
+        </h2>
+    </x-slot>
 
     <div>
-        <!-- Display errors if there are any -->
         @if ($errors->any())
             <div>
                 <ul>
@@ -31,18 +16,32 @@
             </div>
         @endif
 
-        <!-- The form for creating a new item -->
         <form method="POST" action="{{ route('items.store') }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="status" value="open">
-            <input type="text" name="item_name" placeholder="Item Name" required>
-            <textarea name="description" placeholder="Description" required></textarea>
-            {{-- <select name="status" required>
-                <option value="open">Open</option>
-                <option value="closed">Closed</option>
-            </select> --}}
-            <input type="file" name="item_image" required>
-            <button type="submit">Create</button>
+            {{-- <input type="text" name="item_name" placeholder="Item Name" required> --}}
+            {{-- <textarea name="description" placeholder="Description" required></textarea> --}}
+            {{-- <input type="file" name="item_image" required> --}}
+
+            <div>
+                <label for="item_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item Name</label>
+                <input type="text" id="item_name" name="item_name" placeholder="Item Name"
+                    class="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Item
+                Description</label>
+            <textarea id="description" rows="4" name="description"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="description"></textarea>
+
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Choose
+                Image</label>
+            <input
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                aria-describedby="user_avatar_help" name="item_image" id="user_avatar" type="file">
+
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Post Item</button>
+
         </form>
     </div>
 </x-app-layout>

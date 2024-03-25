@@ -17,11 +17,21 @@ class Request extends Model implements HasMedia
     protected $fillable = [
         'sender_user_id',
         'receiver_user_id',
+        'request_item_name',
         'item_id',
         'message',
         'status',
-        // ... any other fields you want to allow for mass assignment
     ];
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_user_id');
+    }
 
     public function registerMediaCollections(): void
     {

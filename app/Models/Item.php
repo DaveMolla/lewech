@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\ItemRequestController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -14,6 +15,16 @@ class Item extends Model implements HasMedia
     use HasFactory;
 
     protected $fillable = ['user_id', 'item_name', 'description', 'status'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function itemRequests()
+    {
+        return $this->hasMany(Request::class);
+    }
 
     public function registerMediaCollections(): void
     {

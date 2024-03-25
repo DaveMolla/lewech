@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\Request as ItemRequest; // Assuming you have a Request model
+use App\Models\Request as ItemRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +33,7 @@ class ItemRequestController extends Controller
             'receiver_user_id' => 'required|exists:users,id',
             'item_id' => 'required|exists:items,id',
             'message' => 'required|string',
+            'request_item_name' => 'required|string',
             'status' => 'required|in:pending,accepted,rejected',
             'image' => 'required|image',
         ]);
@@ -41,6 +42,7 @@ class ItemRequestController extends Controller
             'sender_user_id' => Auth::id(),
             'receiver_user_id' => $validated['receiver_user_id'],
             'item_id' => $validated['item_id'],
+            'request_item_name' => $validated['request_item_name'],
             'message' => $validated['message'],
             'status' => 'pending',
         ]);
@@ -52,5 +54,18 @@ class ItemRequestController extends Controller
         $itemRequest->save();
 
         return redirect()->route('feed')->with('success', 'Request sent successfully.');
+    }
+
+    public function accept(ItemRequest $itemRequest)
+    {
+        $itemRequest->update(['status' => 'approved']);
+
+        return redirect()->back()->with('success', 'Request accepted successfully.');
+    }
+
+    public function reject(ItemRequest $itemRequest)
+    {
+        $itemRequest->update(['status' => 'rejected']);
+        return back()->with('success', 'Request rejected successfully.');
     }
 }

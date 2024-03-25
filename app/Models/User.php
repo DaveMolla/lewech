@@ -60,6 +60,11 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
+    public function requestsMade()
+    {
+        return $this->hasMany(Request::class, 'sender_user_id');
+    }
+
     public function items() {
         return $this->hasMany(Item::class);
     }

@@ -15,14 +15,14 @@
             </div>
         @endif
 
-        <!-- The form for creating a new item request -->
         <form method="POST" action="{{ route('requests.store') }}" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="item_id" value="{{ $item->id }}">
             <input type="hidden" name="receiver_user_id" value="{{ $receiver_user_id }}">
-            <input type="hidden" name="status" value="pending"> <!-- Assuming 'pending' is the initial status -->
+            <input type="hidden" name="status" value="pending">
+            <input type="text" name="request_item_name" placeholder="item name" required>
             <textarea name="message" placeholder="Message" required></textarea>
-            <input type="file" name="image" required> <!-- Name adjusted to match validation rule -->
+            <input type="file" name="image" required>
             <button type="submit">Create</button>
         </form>
     </div>
